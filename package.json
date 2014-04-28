@@ -1,4 +1,5 @@
 {
+
   "name": "NodeLab.cn",
   "version": "0.0.1",
   "private": true,
@@ -15,3 +16,4 @@
     "jade": "~1.3.0"
   }
 }
+
