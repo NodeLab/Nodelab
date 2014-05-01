@@ -11,7 +11,7 @@ var routes = require('./config/routes');
 var debug = require('debug')('my-application');
 
 var config = require('./config/config');
-
+var mongoose = require('mongoose');
 var app = express();
 
 // view engine setup
@@ -48,6 +48,24 @@ if (app.get('env') === 'development') {
         });
     });
 }
+
+// Bootstrap db connection
+// Connect to mongodb
+var connect = function () {
+  var options = { server: { socketOptions: { keepAlive: 1 } } }
+  mongoose.connect(config.db, options)
+}
+connect()
+
+// Error handler
+mongoose.connection.on('error', function (err) {
+  console.log(err)
+})
+
+// Reconnect when closed
+mongoose.connection.on('disconnected', function () {
+  connect()
+})
 
 // production error handler
 // no stacktraces leaked to user
